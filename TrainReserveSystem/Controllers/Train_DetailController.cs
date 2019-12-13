@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -63,21 +63,43 @@ namespace TrainReserveSystem.Controllers
                 string doj = Request["doj"].ToString();
                 DateTime oDate = Convert.ToDateTime(doj);
                 int passengercount = Convert.ToInt32(Request["passengercount"].ToString());
+
+                if(passengercount>2)
+                {
+                    Session["searcherror"] = "Max 2 passengers per booking!";
+                    return View("Search");
+                }
+
                 Train_For_Passenger trainsforpassenger = new Train_For_Passenger();
                 var list = db.Train_Detail.Where( train => train.Source == source).Where(train=>train.Destination == destination).Where(train=>train.Date_Of_Travel.Equals(oDate)).Where(train=>train.Total_Seats_Available>passengercount);
                 foreach(Train_Detail trains in list)
                 {
                     string trainame = trains.Train_Name;
-                      
+
                     Console.WriteLine(" Train Name: " + trains.Train_Name);
                 }
                 List<Train_Detail> trainlist = list.ToList();
+                if(trainlist.Count==0)
+                {
+                    Session["searcherror"] = "Sorry, no trains found!";
+                    return View("Search");                                                                                                                                                                                                            
+                }
+
+                    
+                    Console.WriteLine(" Train Name: " + trains.Train_Name);
+                }
+                List<Train_Detail> trainlist = list.ToList();
+
                 Session["source"] = source;
                 Session["destination"] = destination;
                 Session["doj"] = doj;
                 Session["passengercount"]= passengercount;
                 Session["trainlist"] = trainlist;
+
+                Console.WriteLine(list);
+
                 //Console.WriteLine(list);
+
             }
                 
             return View("Train_detail_with_passenger_detail");

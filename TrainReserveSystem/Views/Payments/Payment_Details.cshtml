@@ -1,0 +1,70 @@
+﻿@model TrainReserveSystem.Models.Payment
+
+@{
+    ViewBag.Title = "Payment_Details";
+}
+
+
+
+<html>
+<head>
+    <script>
+        function cardvalidation() {
+            var cardtype = document.getElementById('cardtype').value;
+            if (cardtype == 'visa') {
+                var cardnumber = document.getElementById('ccn').value;
+                var length = cardnumber.length;
+                if (length != 16) {
+                    alert('Error : Card Number does not contain 16 digits!');
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="form-horizontal">
+        <h2>PAYMENT INFORMATION</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+    <div class="col-md-10">
+        CREDIT CARD:<br>
+        <input type="radio" name="cardtype" value="visa" checked="checked"> Visa<br>
+        <input type="radio" name="cardtype" value="mastercard"> MasterCard<br>
+        <input type="radio" name="cardtype" value="americanexpress"> American Express
+        <br>
+    </div>
+
+    <div class="col-md-10">
+        <strong>NAME ON CREDIT CARD:</strong><br>
+        <input type="text" name="name" id="name" required>
+        <br>
+    </div>
+            <div class="col-md-10">
+                <strong>CREDIT CARD NUMBER:</strong><br>
+                <input type="number" name="ccn" id="ccn" required>
+                <br>
+            </div>
+            <div class="col-md-10">
+                <strong>EXPIRY DATE(MM/YYYY):</strong><br>
+                <input type="number" name="month" id="month" required>
+                <input type="number" name="year" id="year" required>
+                <br><br>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" value="PAY" class="btn btn-default" onclick="cardvalidation()" />
+                </div>
+            </div>
+
+        }
+        <!-- <p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p> -->
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+</body>
+</html>

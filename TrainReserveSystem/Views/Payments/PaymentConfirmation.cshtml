@@ -1,0 +1,38 @@
+﻿@model TrainReserveSystem.Models.Payment_Details
+
+@{
+    ViewBag.Title = "PaymentConfirmation";
+}
+    <html>
+    <body>
+        <h2>PAYMENT SUCCESSFULL</h2>
+        <div class="form-horizontal">
+            <p><strong>Find the Booking Details below:</strong></p>
+            <table class="table table-condensed table-hover">
+                
+                @foreach (var passenger in (Session["passengerlist"] as List<TrainReserveSystem.Models.Passenger_Details>))
+                {
+                    <tr>
+                        <td><b>Passenger Name:</b></td>
+                        <td>@passenger.FName @passenger.LName</td>
+
+                    </tr>
+                    
+                }
+            <tr>
+                <td><b>From:</b></td>
+                <td>@Session["source"].ToString()</td>
+            </tr>
+            <tr>
+                <td><b>To:</b></td>
+                <td>@Session["destination"].ToString()</td>
+            </tr>
+            <tr>
+
+                <td><b>Status:</b></td>
+                <td>Confirmed</td>
+            </tr>
+            </table>
+        </div>
+    </body>
+    </html>

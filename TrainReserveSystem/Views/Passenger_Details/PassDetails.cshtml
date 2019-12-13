@@ -1,4 +1,4 @@
-﻿@model TrainReserveSystem.Models.Passenger_Details
+@model TrainReserveSystem.Models.Passenger_Details
 
 @{
     ViewBag.Title = "PassDetails";
@@ -6,6 +6,79 @@
 
 
 <html>
+<head>
+    <style>
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-horizontal">
+        <h2>PASSENGER DETAILS</h2>
+        <p>
+            @if (Session["passengererror"] != null)
+            {
+                <span style="color:red;">@Session["passengererror"].ToString();</span>
+            }
+
+        </p>
+
+        @using (Html.BeginForm("confirmbooking", "Passenger_Details"))
+        {
+            @Html.AntiForgeryToken()
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>FirstName</th>
+                        <th>Last Name</th>
+                        <th>Age</th>
+                        <th>Address</th>
+                        <th>Mobile Number</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                @for (int i = 1; i <= (int)Session["passengercount"]; i++)
+
+                {
+                    if (i == 1)
+                    {
+                        <tr>
+                            <td><input type="text" name="firstname" id="firstname" required></td>
+                            <td><input type="text" name="lastname" id="lastname" required></td>
+                            <td><input type="number" name="age" id="age" required></td>
+                            <td><input type="text" name="address" id="address" required></td>
+                            <td><input type="number" name="mobilenumber" id="mobilenumber" required></td>
+                            <td><input type="email" name="email" id="email" required></td>
+                        </tr>
+                    }
+                    if (i == 2)
+                    {
+                        <tr>
+                            <td><input type="text" name="firstname2" id="firstname2" required></td>
+                            <td><input type="text" name="lastname2" id="lastname2" required></td>
+                            <td><input type="number" name="age2" id="age2" required></td>
+                            <td><input type="text" name="address2" id="address2" required></td>
+                            <td><input type="number" name="mobilenumber2" id="mobilenumber2" required></td>
+                            <td><input type="email" name="email2" id="email2" required></td>
+                        </tr>
+                    }
+                }
+
+            </table>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="confirmbooking" class="btn btn-default button" />
+
 <body>
     <div class="form-horizontal">
         <h2>PASSENGER DETAILS</h2>
@@ -55,12 +128,17 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="confirmbooking" class="btn btn-default" />
+
                 </div>
             </div>
 
         }
         <!-- <p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p> -->
+
+
+
         
+
         <div>
             @Html.ActionLink("Back to List", "Index")
         </div>

@@ -13,6 +13,34 @@ namespace TrainReserveSystem.Models
     public class Payment_Details
     {
         [Required]
+
+        [Display(Name = "Credit Card")]
+        public string cardtype { get; set; }
+
+        [Required]
+        [Display(Name = "Name on Credit Card")]
+        public string name { get; set; }
+
+        [Required]
+        [Display(Name = "Card Number")]
+        public long creditcardnumber { get; set; }
+
+        [Required]
+        [Display(Name = "Expiry Month-MM")]
+        public int expirymonth { get; set; }
+
+        [Required]
+        [Display(Name = "Expiry Year YYYY")]
+        public int expiry_year { get; set; }
+
+       
+        public enum CardType
+        {
+            visa,
+            mastercard,
+            americanexpress
+        }
+
         public string cardtype { get; set; }
 
         [Required]
@@ -24,6 +52,7 @@ namespace TrainReserveSystem.Models
 
         [Required]
         public string expirydate { get; set; }
+
 
     }
 }
