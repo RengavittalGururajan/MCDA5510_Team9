@@ -260,6 +260,7 @@ namespace TrainReserveSystem.Controllers
                 Console.WriteLine(number);
                 if(Session["errormessage"]==null)
                 {
+                 //   List<Passenger_Details> passengerlist = (List<TrainReserveSystem.Models.Train_Detail>)Session["passengerlist"];
                     return View("PaymentConfirmation");
                 }
             }

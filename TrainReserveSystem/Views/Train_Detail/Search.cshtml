@@ -3,43 +3,65 @@
     ViewBag.Title = "Search";
 }
 <html>
+<head>
+    <style>
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
 <body>
     <div class="form-horizontal">
         <h2>AVAILABILITY</h2>
+        <p>
+            @if (Session["searcherror"] != null)
+            {
+                <span style="color:red;">@Session["searcherror"].ToString();</span>
+            }
 
+        </p>
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
-            
-                <div class="col-md-10">
-                    SOURCE:<br>
-                    <input type="text" name="source" id="source" required>   
-                    <br>
+
+            <div class="col-md-10">
+                SOURCE:<br>
+                <input type="text" name="source" id="source" required>
+                <br>
+            </div>
+            <div class="col-md-10">
+                DESTINATION:<br>
+                <input type="text" name="destination" id="destination" required>
+                <br>
+            </div>
+            <div class="col-md-10">
+                DATE OF JOURNEY:<br>
+                <input type="date" name="doj" id="doj" required>
+                <br>
+            </div>
+            <div class="col-md-10">
+                NO OF PASSENGERS:<br>
+                <input type="text" name="passengercount" id="passengercount" required>
+                <br><br>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit"  value="Search" class="btn btn-default button glyphicon-search" onclick="window.location.href('@Url.Action("Train_detail_with_passenger_detail","Account")')" />
                 </div>
-                <div class="col-md-10">
-                    DESTINATION:<br>
-                    <input type="text" name="destination" id="destination" required>
-                    <br>
-                </div>
-                <div class="col-md-10">
-                    DATE OF JOURNEY:<br>
-                    <input type="text" name="doj" id="doj" required>
-                    <br>
-                </div>
-                <div class="col-md-10">
-                    NO OF PASSENGERS:<br>
-                    <input type="text" name="passengercount" id="passengercount" required>
-                    <br><br>
-                </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10"> 
-                            <input type="submit" value="Search" class="btn btn-default" onclick="window.location.href('@Url.Action("Train_detail_with_passenger_detail","Account")')" />
-                        </div>
-                    </div>
-            
+            </div>
+
         }
-       <!-- <p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p> -->
+        <!-- <p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p> -->
 
         <div>
             @Html.ActionLink("Back to List", "Index")
