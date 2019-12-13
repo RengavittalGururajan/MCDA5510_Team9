@@ -215,9 +215,9 @@
     <Content Include="Views\Passenger_Details\PassDetails.cshtml" />
     <Content Include="Views\Passenger_Details\Confirm_Details.cshtml" />
     <Content Include="Views\Payments\Payment_Details.cshtml" />
+
     <Content Include="Views\Payments\Payment_Page.cshtml" />
     <Content Include="Views\Payments\PaymentConfirmation.cshtml" />
-    <Content Include="Views\Train_Detail\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
