@@ -4,7 +4,6 @@
 
 }
 <html>
-
 <head>
     <style>
         .button {
@@ -31,16 +30,9 @@
             }
 
         </p>
-
-<body>
-    <div class="form-horizontal">
-        <h2>AVAILABILITY</h2>
-
-
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-
 
 
             <div class="col-md-10">
@@ -71,37 +63,6 @@
 
         }
         <!-- <p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p> -->
-
-            
-                <div class="col-md-10">
-                    SOURCE:<br>
-                    <input type="text" name="source" id="source">
-                    <br>
-                </div>
-                <div class="col-md-10">
-                    DESTINATION:<br>
-                    <input type="text" name="destination" id="destination">
-                    <br>
-                </div>
-                <div class="col-md-10">
-                    DATE OF JOURNEY:<br>
-                    <input type="text" name="doj" id="doj">
-                    <br>
-                </div>
-                <div class="col-md-10">
-                    NO OF PASSENGERS:<br>
-                    <input type="text" name="passengercount" id="passengercount">
-                    <br><br>
-                </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10"> 
-                            <input type="submit" value="Search" class="btn btn-default" onclick="window.location.href('@Url.Action("Train_detail_with_passenger_detail","Account")')" />
-                        </div>
-                    </div>
-            
-        }
-       <!-- <p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p> -->
-
 
         <div>
             @Html.ActionLink("Back to List", "Index")

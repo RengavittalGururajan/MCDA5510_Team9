@@ -121,7 +121,6 @@ namespace TrainReserveSystem.Controllers
         }
         public ActionResult paymentpage()
         {
-
             return View("Payment_Page");
         }
         public ActionResult redirect()
@@ -291,21 +290,14 @@ namespace TrainReserveSystem.Controllers
                     booking.FK_Train_Detail_ID = trainid;
                     db.Bookings.Add(booking);
                     db.SaveChanges();
-                    var rawQuery3 = db.Database.SqlQuery<int>("SELECT Vacant_Seats from Train_Detail WHERE Train_Detail_ID=" + trainid +";");
-                    var task3 = rawQuery.SingleAsync();
-                    task3.Wait();
-                    int vacantseats = (int)task3.Result;
-                    int updateseats = vacantseats - passengercount;
-                    var rawQuery4 = db.Database.SqlQuery<int>("UPDATE Train_Detail SET Vacant_Seats=" + updateseats + " WHERE Train_Detail_ID=" + trainid + ";");
-                    var task4 = rawQuery.SingleAsync();
-                    task4.Wait();
+                   
                     Session["bookingid"] = bookingid;
                     
                     foreach(var id in passids)
                     {
                         var rawQuery2 = db.Database.SqlQuery<int>("SELECT COUNT(*) VALUE FROM Passenger_Booking;");
                         var task2 = rawQuery2.SingleAsync();
-                        task2.Wait();
+                        
                         int passengerbookingid = (int)task2.Result + 1;
                         Passenger_Booking pb = new Passenger_Booking();
                         pb.PB_ID = passengerbookingid;
@@ -320,9 +312,6 @@ namespace TrainReserveSystem.Controllers
             }
 
             return View("Payment_Page");
-
-
-            return View("Payment_Details");
 
         }
         protected override void Dispose(bool disposing)

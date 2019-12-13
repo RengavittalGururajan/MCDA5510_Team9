@@ -8,9 +8,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
-
-
+    
     <h2>Train Details</h2>
     <table class="table table-condensed table-hover">
         <thead>
@@ -26,11 +24,7 @@
         </thead>
         <tbody>
             
-
             @foreach (var trains in (Session["trainlist"] as List<TrainReserveSystem.Models.Train_Detail>))
-
-            @foreach(var trains in (Session["trainlist"] as List<TrainReserveSystem.Models.Train_Detail>))
-
             {
             <tr>
                 <td>@Session["source"]</td>
@@ -49,11 +43,6 @@
         </tbody>
 
     </table>
-
         
 
     }
-
-
-}
-

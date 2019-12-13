@@ -121,15 +121,13 @@ namespace TrainReserveSystem.Controllers
             Console.WriteLine("Train ID: " + id);
             return View("PassDetails");
         }
-
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult confirmbooking()
         {
-
             int countid = 0;
             Session["passengererror"] = null;
-
             int count = (int)Session["passengercount"];
             Console.WriteLine(count);
             List<Passenger_Details> passengerlist = new List<Passenger_Details>();
@@ -143,7 +141,6 @@ namespace TrainReserveSystem.Controllers
                     string address = Request["address"].ToString();
                     string mobilenumber = Request["mobilenumber"].ToString();
                     string email = Request["email"].ToString();
-
                     int length = mobilenumber.Length;
                    
                     if (!Regex.Match(fname, "^[A-Z][a-zA-Z]*$").Success)
@@ -161,7 +158,6 @@ namespace TrainReserveSystem.Controllers
                         Session["passengererror"] = "Please enter a correct mobile number!";
                         return View("PassDetails");
                     }
-
                     Passenger_Details pd = new Passenger_Details();
                     pd.FName = fname;
                     pd.LName = lname;
@@ -169,12 +165,11 @@ namespace TrainReserveSystem.Controllers
                     pd.P_Address = address;
                     pd.Mobile = mobilenumber;
                     pd.Email = email;
-
                     var rawQuery =db.Database.SqlQuery<int>("SELECT COUNT(*) VALUE FROM Passenger_Details;");
                     var task = rawQuery.SingleAsync();
                     int id = (int)task.Result+1;
                     countid = id;
-
+                    pd.ID = id;
                     passengerlist.Add(pd);
                 }
                 if(i==2)
@@ -192,10 +187,8 @@ namespace TrainReserveSystem.Controllers
                     pd.P_Address = address;
                     pd.Mobile = mobilenumber;
                     pd.Email = email;
-
                     int pid = countid + 1;
                     pd.ID = pid;
-
                     passengerlist.Add(pd);
                     
                 }

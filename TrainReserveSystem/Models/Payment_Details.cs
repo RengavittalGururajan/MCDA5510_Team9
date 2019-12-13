@@ -13,7 +13,6 @@ namespace TrainReserveSystem.Models
     public class Payment_Details
     {
         [Required]
-
         [Display(Name = "Credit Card")]
         public string cardtype { get; set; }
 
@@ -40,19 +39,6 @@ namespace TrainReserveSystem.Models
             mastercard,
             americanexpress
         }
-
-        public string cardtype { get; set; }
-
-        [Required]
-        [StringLength(16)]
-        public string name { get; set; }
-
-        [Required]
-        public long creditcardnumber { get; set; }
-
-        [Required]
-        public string expirydate { get; set; }
-
 
     }
 }
