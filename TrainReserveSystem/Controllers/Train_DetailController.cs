@@ -17,7 +17,9 @@ namespace TrainReserveSystem.Controllers
 
         // GET: Train_Detail
         public ActionResult Index()
+
         {
+            
             return View(db.Train_Detail.ToList());
         }
 
@@ -43,10 +45,14 @@ namespace TrainReserveSystem.Controllers
         }
         public ActionResult Search()
         {
+            Session["searcherror"] = null;
+            Session["passengererror"] = null;
+            Session["errormessage"] = null;
             return View();
         }
-        public ActionResult Book(int id)
+        public ActionResult Book(int id,int fare)
         {
+            Session["trainfare"] = fare;
             Session["id"] = id;
            // return View(Url.Action("Book", "TrainReserveSystem.Controllers.Passenger_DetailsController", id ));
             return this.RedirectToAction("Book", "Passenger_Details",new { id=id});
@@ -62,6 +68,12 @@ namespace TrainReserveSystem.Controllers
                 string destination = Request["destination"].ToString();
                 string doj = Request["doj"].ToString();
                 DateTime oDate = Convert.ToDateTime(doj);
+                DateTime now = DateTime.Now;
+                if(oDate<=now)
+                {
+                    Session["searcherror"] = "Please select a future date for Booking!";
+                    return View("Search");
+                }
                 int passengercount = Convert.ToInt32(Request["passengercount"].ToString());
                 if(passengercount>2)
                 {

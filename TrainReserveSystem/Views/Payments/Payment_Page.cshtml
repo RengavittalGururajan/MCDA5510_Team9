@@ -55,7 +55,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.creditcardnumber, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.creditcardnumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.creditcardnumber, new { htmlAttributes = new { @class = "form-control" ,@maxlength="16"} })
             @Html.ValidationMessageFor(model => model.creditcardnumber, "", new { @class = "text-danger" })
         </div>
     </div>

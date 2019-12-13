@@ -34,8 +34,8 @@
                 <td>@trains.Train_Name;</td>
                 <td>@trains.Train_Number</td>
                 <td>@trains.Fare</td>
-                <td>@Html.ActionLink("Book", "Book", new { id = trains.Train_Detail_ID })</td>
-                
+                <td>@Html.ActionLink("Book", "Book", new { id = trains.Train_Detail_ID , fare= trains.Fare } )</td>
+               
             </tr>
             }
 

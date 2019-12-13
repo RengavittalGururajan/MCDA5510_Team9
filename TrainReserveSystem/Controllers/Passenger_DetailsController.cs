@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TrainReserveSystem.Models;
+using System.Text.RegularExpressions;
 
 namespace TrainReserveSystem.Controllers
 {
@@ -141,7 +142,18 @@ namespace TrainReserveSystem.Controllers
                     string mobilenumber = Request["mobilenumber"].ToString();
                     string email = Request["email"].ToString();
                     int length = mobilenumber.Length;
-                    if(length!=10)
+                   
+                    if (!Regex.Match(fname, "^[A-Z][a-zA-Z]*$").Success)
+                    {
+                        Session["passengererror"] = "Name should contain only Alphabets!";
+                        return View("PassDetails");
+                    }
+                    if (!Regex.Match(lname, "^[A-Z][a-zA-Z]*$").Success)
+                    {
+                        Session["passengererror"] = "Name should contain only Alphabets!";
+                        return View("PassDetails");
+                    }
+                    if (length!=10)
                     {
                         Session["passengererror"] = "Please enter a correct mobile number!";
                         return View("PassDetails");

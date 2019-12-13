@@ -123,6 +123,10 @@ namespace TrainReserveSystem.Controllers
         {
             return View("Payment_Page");
         }
+        public ActionResult redirect()
+        {
+            return this.RedirectToAction("Search","Train_Detail");
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ValidationForPayment([Bind(Include = "cardtype,name,creditcardnumber,expirymonth,expiry_year")] Payment_Details paymentdetails)
@@ -222,8 +226,13 @@ namespace TrainReserveSystem.Controllers
                         return View("Payment_Page");
                     }
                     if (number[0]!='3')
+                    {                        
+                        Session["errormessage"] = "American Card Number should start by 34 or 37!";
+                        return View("Payment_Page");
+                    }
+                    else if(number[1]!='4' && number[1]!='7')
                     {
-                        Session["errormessage"] = "Amrican Card Number should start by 34-37!";
+                        Session["errormessage"] = "American Card Number should start by 34 or 37!";
                         return View("Payment_Page");
                     }
                     char secchar = number[1];
@@ -258,9 +267,53 @@ namespace TrainReserveSystem.Controllers
                 Console.WriteLine(cardtype);
                 Console.WriteLine(name);
                 Console.WriteLine(number);
+                List<int> passids = new List<int>();
                 if(Session["errormessage"]==null)
                 {
-                 //   List<Passenger_Details> passengerlist = (List<TrainReserveSystem.Models.Train_Detail>)Session["passengerlist"];
+                    List<Passenger_Details> passengerlist = (List<TrainReserveSystem.Models.Passenger_Details>)Session["passengerlist"];
+                    foreach(var passenger in passengerlist)
+                    {
+                        db.Passenger_Details.Add(passenger);
+                        db.SaveChanges();
+                        passids.Add(passenger.ID);
+                    }
+                    var rawQuery = db.Database.SqlQuery<int>("SELECT COUNT(*) VALUE FROM Booking;");
+                    var task = rawQuery.SingleAsync();
+                    int bookingid = (int)task.Result + 1;
+                    int passengercount = (int)Session["passengercount"];
+                    int fare = (int)Session["trainfare"];
+                    int totalfare = passengercount * fare;
+                    int trainid = (int)Session["id"];
+                    Booking booking = new Booking();
+                    booking.Booking_ID = bookingid;
+                    booking.Total_Fare = totalfare;
+                    booking.FK_Train_Detail_ID = trainid;
+                    db.Bookings.Add(booking);
+                    db.SaveChanges();
+                    var rawQuery3 = db.Database.SqlQuery<int>("SELECT Vacant_Seats from Train_Detail WHERE Train_Detail_ID=" + trainid +";");
+                    var task3 = rawQuery.SingleAsync();
+                    task3.Wait();
+                    int vacantseats = (int)task3.Result;
+                    int updateseats = vacantseats - passengercount;
+                    var rawQuery4 = db.Database.SqlQuery<int>("UPDATE Train_Detail SET Vacant_Seats=" + updateseats + " WHERE Train_Detail_ID=" + trainid + ";");
+                    var task4 = rawQuery.SingleAsync();
+                    task4.Wait();
+                    Session["bookingid"] = bookingid;
+                    
+                    foreach(var id in passids)
+                    {
+                        var rawQuery2 = db.Database.SqlQuery<int>("SELECT COUNT(*) VALUE FROM Passenger_Booking;");
+                        var task2 = rawQuery2.SingleAsync();
+                        task2.Wait();
+                        int passengerbookingid = (int)task2.Result + 1;
+                        Passenger_Booking pb = new Passenger_Booking();
+                        pb.PB_ID = passengerbookingid;
+                        pb.FK_Booking_ID = bookingid;
+                        pb.FK_ID = id;
+                        db.Passenger_Booking.Add(pb);
+                        db.SaveChanges();
+                    }
+
                     return View("PaymentConfirmation");
                 }
             }

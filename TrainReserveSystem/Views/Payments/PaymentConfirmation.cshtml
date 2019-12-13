@@ -9,7 +9,10 @@
         <div class="form-horizontal">
             <p><strong>Find the Booking Details below:</strong></p>
             <table class="table table-condensed table-hover">
-                
+                <tr>
+                    <td><b>Booking ID:</b></td>
+                    <td>@Session["bookingid"].ToString()</td>
+                </tr>
                 @foreach (var passenger in (Session["passengerlist"] as List<TrainReserveSystem.Models.Passenger_Details>))
                 {
                     <tr>
@@ -34,5 +37,6 @@
             </tr>
             </table>
         </div>
+        <p>@Html.ActionLink("Return to Search Page", "redirect")</p>
     </body>
     </html>
