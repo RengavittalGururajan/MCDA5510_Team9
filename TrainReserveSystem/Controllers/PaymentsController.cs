@@ -121,6 +121,7 @@ namespace TrainReserveSystem.Controllers
         }
         public ActionResult paymentpage()
         {
+
             return View("Payment_Page");
         }
         [HttpPost]
@@ -266,6 +267,9 @@ namespace TrainReserveSystem.Controllers
             }
 
             return View("Payment_Page");
+
+
+            return View("Payment_Details");
 
         }
         protected override void Dispose(bool disposing)
